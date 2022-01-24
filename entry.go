@@ -116,8 +116,8 @@ func (entry *Entry) WithContext(ctx context.Context) *Entry {
 	return &Entry{Logger: entry.Logger, Data: dataCopy, Time: entry.Time, err: entry.err, Context: ctx}
 }
 
-func (entry *Entry) WithPrefix(ctx context.Context, prefix string) *Entry {
-	return entry.WithContext(context.WithValue(ctx, FieldKeyPrefix, prefix))
+func (entry *Entry) WithPrefix(prefix string) *Entry {
+	return entry.WithContext(context.WithValue(entry.Context, FieldKeyPrefix, prefix))
 }
 
 // Add a single field to the Entry.

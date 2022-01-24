@@ -17,11 +17,11 @@ const (
 	FieldKeyOperation      = "operation"
 )
 
-type FruitzFormatter struct {
+type GCPFormatter struct {
 	GoogleProjectID string
 }
 
-func (f *FruitzFormatter) Format(entry *Entry) ([]byte, error) {
+func (f *GCPFormatter) Format(entry *Entry) ([]byte, error) {
 	data := make(Fields)
 	data["severity"] = entry.Level
 	data["message"] = entry.Message

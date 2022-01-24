@@ -141,6 +141,11 @@ func (logger *Logger) WithContext(ctx context.Context) *Entry {
 	return entry.WithContext(ctx)
 }
 
+func (logger *Logger) WithPrefix(ctx context.Context, prefix string) *Entry {
+	ctx = context.WithValue(ctx, FieldKeyPrefix, prefix)
+	return WithContext(ctx)
+}
+
 // Overrides the time of the log entry.
 func (logger *Logger) WithTime(t time.Time) *Entry {
 	entry := logger.newEntry()
