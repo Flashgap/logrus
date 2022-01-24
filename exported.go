@@ -134,6 +134,11 @@ func Fatal(args ...interface{}) {
 	std.Fatal(args...)
 }
 
+// Critical logs a message at level Critical on the standard logger.
+func Critical(args ...interface{}) {
+	std.Critical(args...)
+}
+
 // TraceFn logs a message from a func at level Trace on the standard logger.
 func TraceFn(fn LogFunction) {
 	std.TraceFn(fn)
@@ -177,6 +182,11 @@ func PanicFn(fn LogFunction) {
 // FatalFn logs a message from a func at level Fatal on the standard logger then the process will exit with status set to 1.
 func FatalFn(fn LogFunction) {
 	std.FatalFn(fn)
+}
+
+// CriticalFn logs a message from a func at level Critical on the standard logger
+func CriticalFn(fn LogFunction) {
+	std.CriticalFn(fn)
 }
 
 // Tracef logs a message at level Trace on the standard logger.
@@ -224,6 +234,11 @@ func Fatalf(format string, args ...interface{}) {
 	std.Fatalf(format, args...)
 }
 
+// Criticalf logs a message at level Critical on the standard logger.
+func Criticalf(format string, args ...interface{}) {
+	std.Criticalf(format, args...)
+}
+
 // Traceln logs a message at level Trace on the standard logger.
 func Traceln(args ...interface{}) {
 	std.Traceln(args...)
@@ -267,4 +282,9 @@ func Panicln(args ...interface{}) {
 // Fatalln logs a message at level Fatal on the standard logger then the process will exit with status set to 1.
 func Fatalln(args ...interface{}) {
 	std.Fatalln(args...)
+}
+
+// Criticalln logs a message at level Critical on the standard logger.
+func Criticalln(args ...interface{}) {
+	std.Criticalln(args...)
 }
