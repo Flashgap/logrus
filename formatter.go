@@ -11,6 +11,7 @@ const (
 	FieldKeyLogrusError    = "logrus_error"
 	FieldKeyFunc           = "func"
 	FieldKeyFile           = "file"
+	FieldKeyPrefix         = "prefix"
 )
 
 // The Formatter interface is used to implement a custom Formatter. It takes an

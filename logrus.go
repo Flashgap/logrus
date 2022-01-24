@@ -26,8 +26,8 @@ func ParseLevel(lvl string) (Level, error) {
 	switch strings.ToLower(lvl) {
 	case "panic":
 		return PanicLevel, nil
-	case "fatal":
-		return FatalLevel, nil
+	case "critical":
+		return CriticalLevel, nil
 	case "error":
 		return ErrorLevel, nil
 	case "warn", "warning":
@@ -68,8 +68,8 @@ func (level Level) MarshalText() ([]byte, error) {
 		return []byte("warning"), nil
 	case ErrorLevel:
 		return []byte("error"), nil
-	case FatalLevel:
-		return []byte("fatal"), nil
+	case CriticalLevel:
+		return []byte("critical"), nil
 	case PanicLevel:
 		return []byte("panic"), nil
 	}
@@ -80,7 +80,7 @@ func (level Level) MarshalText() ([]byte, error) {
 // A constant exposing all logging levels
 var AllLevels = []Level{
 	PanicLevel,
-	FatalLevel,
+	CriticalLevel,
 	ErrorLevel,
 	WarnLevel,
 	InfoLevel,
@@ -94,9 +94,9 @@ const (
 	// PanicLevel level, highest level of severity. Logs and then calls panic with the
 	// message passed to Debug, Info, ...
 	PanicLevel Level = iota
-	// FatalLevel level. Logs and then calls `logger.Exit(1)`. It will exit even if the
-	// logging level is set to Panic.
-	FatalLevel
+	// CriticalLevel level. This defines an error that needs to be looked at
+	// immediatly but does not make the binary panic
+	CriticalLevel
 	// ErrorLevel level. Logs. Used for errors that should definitely be noted.
 	// Commonly used for hooks to send errors to an error tracking service.
 	ErrorLevel
@@ -148,6 +148,7 @@ type FieldLogger interface {
 	Warningf(format string, args ...interface{})
 	Errorf(format string, args ...interface{})
 	Fatalf(format string, args ...interface{})
+	Criticalf(format string, args ...interface{})
 	Panicf(format string, args ...interface{})
 
 	Debug(args ...interface{})
@@ -157,6 +158,7 @@ type FieldLogger interface {
 	Warning(args ...interface{})
 	Error(args ...interface{})
 	Fatal(args ...interface{})
+	Critical(args ...interface{})
 	Panic(args ...interface{})
 
 	Debugln(args ...interface{})
@@ -166,6 +168,7 @@ type FieldLogger interface {
 	Warningln(args ...interface{})
 	Errorln(args ...interface{})
 	Fatalln(args ...interface{})
+	Criticalln(args ...interface{})
 	Panicln(args ...interface{})
 
 	// IsDebugEnabled() bool

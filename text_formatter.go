@@ -236,7 +236,7 @@ func (f *TextFormatter) printColored(b *bytes.Buffer, entry *Entry, keys []strin
 		levelColor = gray
 	case WarnLevel:
 		levelColor = yellow
-	case ErrorLevel, FatalLevel, PanicLevel:
+	case ErrorLevel, CriticalLevel, PanicLevel:
 		levelColor = red
 	case InfoLevel:
 		levelColor = blue

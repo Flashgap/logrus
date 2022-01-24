@@ -116,6 +116,10 @@ func (entry *Entry) WithContext(ctx context.Context) *Entry {
 	return &Entry{Logger: entry.Logger, Data: dataCopy, Time: entry.Time, err: entry.err, Context: ctx}
 }
 
+func (entry *Entry) WithPrefix(ctx context.Context, prefix string) *Entry {
+	return entry.WithContext(context.WithValue(ctx, FieldKeyPrefix, prefix))
+}
+
 // Add a single field to the Entry.
 func (entry *Entry) WithField(key string, value interface{}) *Entry {
 	return entry.WithFields(Fields{key: value})
@@ -334,8 +338,11 @@ func (entry *Entry) Error(args ...interface{}) {
 }
 
 func (entry *Entry) Fatal(args ...interface{}) {
-	entry.Log(FatalLevel, args...)
-	entry.Logger.Exit(1)
+	entry.Log(CriticalLevel, args...)
+}
+
+func (entry *Entry) Critical(args ...interface{}) {
+	entry.Log(CriticalLevel, args...)
 }
 
 func (entry *Entry) Panic(args ...interface{}) {
@@ -379,8 +386,11 @@ func (entry *Entry) Errorf(format string, args ...interface{}) {
 }
 
 func (entry *Entry) Fatalf(format string, args ...interface{}) {
-	entry.Logf(FatalLevel, format, args...)
-	entry.Logger.Exit(1)
+	entry.Logf(CriticalLevel, format, args...)
+}
+
+func (entry *Entry) Criticalf(format string, args ...interface{}) {
+	entry.Logf(CriticalLevel, format, args...)
 }
 
 func (entry *Entry) Panicf(format string, args ...interface{}) {
@@ -424,8 +434,11 @@ func (entry *Entry) Errorln(args ...interface{}) {
 }
 
 func (entry *Entry) Fatalln(args ...interface{}) {
-	entry.Logln(FatalLevel, args...)
-	entry.Logger.Exit(1)
+	entry.Logln(CriticalLevel, args...)
+}
+
+func (entry *Entry) Criticalln(args ...interface{}) {
+	entry.Logln(CriticalLevel, args...)
 }
 
 func (entry *Entry) Panicln(args ...interface{}) {

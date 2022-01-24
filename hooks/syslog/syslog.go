@@ -1,3 +1,4 @@
+//go:build !windows && !nacl && !plan9
 // +build !windows,!nacl,!plan9
 
 package syslog
@@ -35,7 +36,7 @@ func (hook *SyslogHook) Fire(entry *logrus.Entry) error {
 	switch entry.Level {
 	case logrus.PanicLevel:
 		return hook.Writer.Crit(line)
-	case logrus.FatalLevel:
+	case logrus.CriticalLevel:
 		return hook.Writer.Crit(line)
 	case logrus.ErrorLevel:
 		return hook.Writer.Err(line)

@@ -214,9 +214,9 @@ func TestPadLevelText(t *testing.T) {
 			paddedLevelText: "PANIC  ", // 2 extra spaces
 		},
 		{
-			name:            "FatalLevel",
-			level:           FatalLevel,
-			paddedLevelText: "FATAL  ", // 2 extra spaces
+			name:            "CriticalLevel",
+			level:           CriticalLevel,
+			paddedLevelText: "CRITICAL  ", // 2 extra spaces
 		},
 		{
 			name:            "ErrorLevel",

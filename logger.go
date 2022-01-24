@@ -187,8 +187,11 @@ func (logger *Logger) Errorf(format string, args ...interface{}) {
 }
 
 func (logger *Logger) Fatalf(format string, args ...interface{}) {
-	logger.Logf(FatalLevel, format, args...)
-	logger.Exit(1)
+	logger.Logf(CriticalLevel, format, args...)
+}
+
+func (logger *Logger) Criticalf(format string, args ...interface{}) {
+	logger.Logf(CriticalLevel, format, args...)
 }
 
 func (logger *Logger) Panicf(format string, args ...interface{}) {
@@ -245,8 +248,11 @@ func (logger *Logger) Error(args ...interface{}) {
 }
 
 func (logger *Logger) Fatal(args ...interface{}) {
-	logger.Log(FatalLevel, args...)
-	logger.Exit(1)
+	logger.Log(CriticalLevel, args...)
+}
+
+func (logger *Logger) Critical(args ...interface{}) {
+	logger.Log(CriticalLevel, args...)
 }
 
 func (logger *Logger) Panic(args ...interface{}) {
@@ -284,8 +290,11 @@ func (logger *Logger) ErrorFn(fn LogFunction) {
 }
 
 func (logger *Logger) FatalFn(fn LogFunction) {
-	logger.LogFn(FatalLevel, fn)
-	logger.Exit(1)
+	logger.LogFn(CriticalLevel, fn)
+}
+
+func (logger *Logger) CriticalFn(fn LogFunction) {
+	logger.LogFn(CriticalLevel, fn)
 }
 
 func (logger *Logger) PanicFn(fn LogFunction) {
@@ -331,8 +340,11 @@ func (logger *Logger) Errorln(args ...interface{}) {
 }
 
 func (logger *Logger) Fatalln(args ...interface{}) {
-	logger.Logln(FatalLevel, args...)
-	logger.Exit(1)
+	logger.Logln(CriticalLevel, args...)
+}
+
+func (logger *Logger) Criticalln(args ...interface{}) {
+	logger.Logln(CriticalLevel, args...)
 }
 
 func (logger *Logger) Panicln(args ...interface{}) {
