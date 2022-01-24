@@ -15,6 +15,8 @@ const (
 	FieldKeyTrace          = "trace"
 	FieldKeySpan           = "span"
 	FieldKeyOperation      = "operation"
+	FieldKeyRemoteIP       = "remoteIP"
+	FieldKeyFullPath       = "fullPath"
 )
 
 type GCPFormatter struct {
@@ -43,6 +45,10 @@ func (f *GCPFormatter) Format(entry *Entry) ([]byte, error) {
 			httpRequest["userAgent"] = req.UserAgent()
 			httpRequest["referer"] = req.Referer()
 			httpRequest["protocol"] = req.Proto
+		}
+		if ripI := entry.Context.Value(FieldKeyRemoteIP); ripI != nil {
+			rIP := ripI.(string)
+			httpRequest["remoteIp"] = rIP
 		}
 		if respI := entry.Context.Value(FieldKeyResponseStatus); respI != nil {
 			resp := respI.(int)
