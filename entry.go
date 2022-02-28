@@ -117,6 +117,9 @@ func (entry *Entry) WithContext(ctx context.Context) *Entry {
 }
 
 func (entry *Entry) WithPrefix(prefix string) *Entry {
+	if oldPrefix, ok := entry.Context.Value(FieldKeyPrefix).(string); ok {
+		prefix = oldPrefix + prefix
+	}
 	return entry.WithContext(context.WithValue(entry.Context, FieldKeyPrefix, prefix))
 }
 
