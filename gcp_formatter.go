@@ -32,7 +32,7 @@ func (f *GCPFormatter) Format(entry *Entry) ([]byte, error) {
 	// All contextual info stored in the entry
 	if entry.Context != nil {
 		if prefix := entry.Context.Value(FieldKeyPrefix); prefix != nil {
-			data["message"] = prefix.(string) + data["message"].(string)
+			data["message"] = prefix.(string) + " " + data["message"].(string)
 		}
 
 		// All HTTP info stored in the entry
