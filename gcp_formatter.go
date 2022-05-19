@@ -17,6 +17,10 @@ const (
 	FieldKeyOperation      = "operation"
 	FieldKeyRemoteIP       = "remoteIP"
 	FieldKeyFullPath       = "fullPath"
+	FieldKeyAuthIsAdmin    = "authIsAdmin"
+	FieldKeyAuthProvider   = "authProvider"
+	FieldKeyAuthUserID     = "authUserID"
+	FieldKeyAuthEmail      = "authEmail"
 )
 
 type GCPFormatter struct {
@@ -77,6 +81,26 @@ func (f *GCPFormatter) Format(entry *Entry) ([]byte, error) {
 		// All Operation info stored in the entry
 		if opI := entry.Context.Value(FieldKeyOperation); opI != nil {
 			data["logging.googleapis.com/operation"] = opI.(map[string]interface{})
+		}
+
+		// Info about the authentication of the call
+		if authI := entry.Context.Value(FieldKeyAuthProvider); authI != nil {
+			authProvider := authI.(string)
+			jsonPayload := make(Fields)
+			jsonPayload["auth_provider"] = authProvider
+			if authEmailI := entry.Context.Value(FieldKeyAuthEmail); authEmailI != nil {
+				authEmail := authEmailI.(string)
+				jsonPayload["auth_email"] = authEmail
+			}
+			if authIsAdminI := entry.Context.Value(FieldKeyAuthIsAdmin); authIsAdminI != nil {
+				authIsAdmin := authIsAdminI.(bool)
+				jsonPayload["auth_is_admin"] = authIsAdmin
+			}
+			if authUserIDI := entry.Context.Value(FieldKeyAuthUserID); authUserIDI != nil {
+				authUserID := authUserIDI.(string)
+				jsonPayload["auth_user_id"] = authUserID
+			}
+			data["labels"] = jsonPayload
 		}
 	}
 
