@@ -135,6 +135,11 @@ func (f *TextFormatter) Format(entry *Entry) ([]byte, error) {
 	for k, v := range entry.Data {
 		data[k] = v
 	}
+	if entry.Context != nil {
+		if prefix := entry.Context.Value(FieldKeyPrefix); prefix != nil {
+			entry.Message = prefix.(string) + " " + entry.Message
+		}
+	}
 	prefixFieldClashes(data, f.FieldMap, entry.HasCaller())
 	keys := make([]string, 0, len(data))
 	for k := range data {
