@@ -21,6 +21,7 @@ const (
 	FieldKeyAuthProvider   = "authProvider"
 	FieldKeyAuthUserID     = "authUserID"
 	FieldKeyAuthEmail      = "authEmail"
+	FieldKeyAppVersion     = "appVersion"
 )
 
 type GCPFormatter struct {
@@ -84,9 +85,9 @@ func (f *GCPFormatter) Format(entry *Entry) ([]byte, error) {
 		}
 
 		// Info about the authentication of the call
+		jsonPayload := make(Fields)
 		if authI := entry.Context.Value(FieldKeyAuthProvider); authI != nil {
 			authProvider := authI.(string)
-			jsonPayload := make(Fields)
 			jsonPayload["auth_provider"] = authProvider
 			if authEmailI := entry.Context.Value(FieldKeyAuthEmail); authEmailI != nil {
 				authEmail := authEmailI.(string)
@@ -100,6 +101,11 @@ func (f *GCPFormatter) Format(entry *Entry) ([]byte, error) {
 				authUserID := authUserIDI.(string)
 				jsonPayload["auth_user_id"] = authUserID
 			}
+		}
+		if appVersion := entry.Context.Value(FieldKeyAppVersion); appVersion != nil {
+			jsonPayload["app_version"] = appVersion.(string)
+		}
+		if len(jsonPayload) > 0 {
 			data["labels"] = jsonPayload
 		}
 	}
