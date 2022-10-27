@@ -136,8 +136,8 @@ func levelToGCPSeverity(level Level) string {
 	case FatalLevel:
 		return "alert"
 	case PanicLevel:
-		return "panic"
+		return "emergency"
 	default:
-		return "critical"
+		return "error"
 	}
 }
