@@ -79,7 +79,7 @@ func TestFatalWithAlternateExit(t *testing.T) {
 	logger.ExitFunc = func(code int) {}
 
 	logger.Fatal("something went very wrong")
-	assert.Equal(logrus.CriticalLevel, hook.LastEntry().Level)
+	assert.Equal(logrus.FatalLevel, hook.LastEntry().Level)
 	assert.Equal("something went very wrong", hook.LastEntry().Message)
 	assert.Equal(1, len(hook.Entries))
 }

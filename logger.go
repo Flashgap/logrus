@@ -192,7 +192,8 @@ func (logger *Logger) Errorf(format string, args ...interface{}) {
 }
 
 func (logger *Logger) Fatalf(format string, args ...interface{}) {
-	logger.Logf(CriticalLevel, format, args...)
+	logger.Logf(FatalLevel, format, args...)
+	logger.Exit(1)
 }
 
 func (logger *Logger) Criticalf(format string, args ...interface{}) {
@@ -231,7 +232,7 @@ func (logger *Logger) Debug(args ...interface{}) {
 }
 
 func (logger *Logger) Verbose(args ...interface{}) {
-	logger.Debug(args)
+	logger.Debug(args...)
 }
 
 func (logger *Logger) Info(args ...interface{}) {
@@ -257,7 +258,8 @@ func (logger *Logger) Error(args ...interface{}) {
 }
 
 func (logger *Logger) Fatal(args ...interface{}) {
-	logger.Log(CriticalLevel, args...)
+	logger.Log(FatalLevel, args...)
+	logger.Exit(1)
 }
 
 func (logger *Logger) Critical(args ...interface{}) {
@@ -299,7 +301,8 @@ func (logger *Logger) ErrorFn(fn LogFunction) {
 }
 
 func (logger *Logger) FatalFn(fn LogFunction) {
-	logger.LogFn(CriticalLevel, fn)
+	logger.LogFn(FatalLevel, fn)
+	logger.Exit(1)
 }
 
 func (logger *Logger) CriticalFn(fn LogFunction) {

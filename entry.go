@@ -341,7 +341,8 @@ func (entry *Entry) Error(args ...interface{}) {
 }
 
 func (entry *Entry) Fatal(args ...interface{}) {
-	entry.Log(CriticalLevel, args...)
+	entry.Log(FatalLevel, args...)
+	entry.Logger.Exit(1)
 }
 
 func (entry *Entry) Critical(args ...interface{}) {
@@ -389,7 +390,8 @@ func (entry *Entry) Errorf(format string, args ...interface{}) {
 }
 
 func (entry *Entry) Fatalf(format string, args ...interface{}) {
-	entry.Logf(CriticalLevel, format, args...)
+	entry.Logf(FatalLevel, format, args...)
+	entry.Logger.Exit(1)
 }
 
 func (entry *Entry) Criticalf(format string, args ...interface{}) {
@@ -437,7 +439,8 @@ func (entry *Entry) Errorln(args ...interface{}) {
 }
 
 func (entry *Entry) Fatalln(args ...interface{}) {
-	entry.Logln(CriticalLevel, args...)
+	entry.Logln(FatalLevel, args...)
+	entry.Logger.Exit(1)
 }
 
 func (entry *Entry) Criticalln(args ...interface{}) {

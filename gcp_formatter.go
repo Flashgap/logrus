@@ -30,7 +30,7 @@ type GCPFormatter struct {
 
 func (f *GCPFormatter) Format(entry *Entry) ([]byte, error) {
 	data := make(Fields)
-	data["severity"] = entry.Level
+	data["severity"] = levelToGCPSeverity(entry.Level)
 	data["message"] = entry.Message
 	data["time"] = entry.Time.Format(time.RFC3339Nano)
 
@@ -116,4 +116,28 @@ func (f *GCPFormatter) Format(entry *Entry) ([]byte, error) {
 	}
 	return append(b, '\n'), nil
 
+}
+
+// https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogSeverity
+func levelToGCPSeverity(level Level) string {
+	switch level {
+	case TraceLevel:
+		return "trace"
+	case DebugLevel:
+		return "debug"
+	case InfoLevel:
+		return "info"
+	case WarnLevel:
+		return "warning"
+	case ErrorLevel:
+		return "error"
+	case CriticalLevel:
+		return "critical"
+	case FatalLevel:
+		return "alert"
+	case PanicLevel:
+		return "emergency"
+	default:
+		return "error"
+	}
 }

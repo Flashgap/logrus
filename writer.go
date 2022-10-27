@@ -42,6 +42,8 @@ func (entry *Entry) WriterLevel(level Level) *io.PipeWriter {
 		printFunc = entry.Error
 	case CriticalLevel:
 		printFunc = entry.Critical
+	case FatalLevel:
+		printFunc = entry.Fatal
 	case PanicLevel:
 		printFunc = entry.Panic
 	default:
