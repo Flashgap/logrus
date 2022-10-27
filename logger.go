@@ -232,7 +232,7 @@ func (logger *Logger) Debug(args ...interface{}) {
 }
 
 func (logger *Logger) Verbose(args ...interface{}) {
-	logger.Debug(args)
+	logger.Debug(args...)
 }
 
 func (logger *Logger) Info(args ...interface{}) {
