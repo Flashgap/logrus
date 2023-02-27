@@ -135,11 +135,6 @@ func (f *TextFormatter) Format(entry *Entry) ([]byte, error) {
 	for k, v := range entry.Data {
 		data[k] = v
 	}
-	if entry.Context != nil {
-		if prefix := entry.Context.Value(FieldKeyPrefix); prefix != nil {
-			entry.Message = prefix.(string) + " " + entry.Message
-		}
-	}
 	prefixFieldClashes(data, f.FieldMap, entry.HasCaller())
 	keys := make([]string, 0, len(data))
 	for k := range data {
@@ -175,6 +170,16 @@ func (f *TextFormatter) Format(entry *Entry) ([]byte, error) {
 		}
 	}
 
+	if entry.Context != nil {
+		if prefix := entry.Context.Value(FieldKeyPrefix); prefix != nil {
+			entry.Message = prefix.(string) + " " + entry.Message
+		}
+		if testName := entry.Context.Value(FieldKeyTestName); testName != nil {
+			f.FieldMap[FieldKeyTestName] = testName.(string)
+			fixedKeys = append(fixedKeys, f.FieldMap.resolve(FieldKeyTestName))
+		}
+	}
+
 	if !f.DisableSorting {
 		if f.SortingFunc == nil {
 			sort.Strings(keys)
@@ -207,7 +212,6 @@ func (f *TextFormatter) Format(entry *Entry) ([]byte, error) {
 	if f.isColored() {
 		f.printColored(b, entry, keys, data, timestampFormat)
 	} else {
-
 		for _, key := range fixedKeys {
 			var value interface{}
 			switch {

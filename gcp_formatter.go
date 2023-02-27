@@ -22,6 +22,8 @@ const (
 	FieldKeyAuthUserID     = "authUserID"
 	FieldKeyAuthEmail      = "authEmail"
 	FieldKeyAppVersion     = "appVersion"
+	FieldKeyDeviceOS       = "deviceOS"
+	FieldKeyTestName       = "testName"
 )
 
 type GCPFormatter struct {
@@ -104,6 +106,9 @@ func (f *GCPFormatter) Format(entry *Entry) ([]byte, error) {
 		}
 		if appVersion := entry.Context.Value(FieldKeyAppVersion); appVersion != nil {
 			jsonPayload["app_version"] = appVersion.(string)
+		}
+		if deviceOS := entry.Context.Value(FieldKeyDeviceOS); deviceOS != nil {
+			jsonPayload["device_os"] = deviceOS.(string)
 		}
 		if len(jsonPayload) > 0 {
 			data["labels"] = jsonPayload
